@@ -1,6 +1,7 @@
 package dao;
 
 import models.Jote;
+import models.Topic;
 import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -55,6 +56,11 @@ public class Sql2oJoteDaoTest {
         joteDao.add(jote2);
         joteDao.add(jote3);
         joteDao.add(jote4);
+
+        joteDao.addTopic(new Topic(jote.getTopic()));
+        joteDao.addTopic(new Topic(jote2.getTopic()));
+        joteDao.addTopic(new Topic(jote3.getTopic()));
+        joteDao.addTopic(new Topic(jote4.getTopic()));
         assertEquals(3,joteDao.getTopics().size());
     }
 
