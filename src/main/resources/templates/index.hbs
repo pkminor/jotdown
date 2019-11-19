@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{{#block "title"}}Jot Down{{/block}}</title>
+   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+   <style>
+   .topics {width:20%;position:fixed;top:0;left:0;height:100%;overflow:auto;background-color: aliceblue;}
+   .labels {width:20%;position:fixed;top:0;right:0;height:100%;overflow:auto;background-color: antiquewhite;}
+   .content {width:60%;margin:auto;}
+   body { background-color: #EBEFF2; user-select:none;font-family: "Trebuchet MS", Helvetica, sans-serif;}
+   textarea {resize:none; height: auto !important;}
+   li {list-style-type: none;}
+   .vr-round {font-family: 'Varela Round', sans-serif;}
+   </style>
+</head>
+<body>
+
+   <!-- Topic filters -->
+ <div class="topics">
+    <div class="vr-round bg-dark text-white font-weight-bolder p-2 mb-1 sticky-top">Topics</div>
+    <div class="px-2 pt-3">
+       <ul>
+       {{#each topics}}
+       <li class="p-1 mb-1"> <a href="/topics/{{topic}}" class="text-dark font-weight-bolder">{{topic}}</a> </li>
+       {{/each}}
+    </ul>
+    </div>
+ </div>
+
+ <div class="content p-3">
+  <div class="container">
+
+     <!-- Add new Jote -->
+     <div class="mb-3">
+        <form action="jotes/new" method="POST">
+         
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <button class="btn btn-success text-white font-weight-bolder">Topic</button>
+             </div>
+            <select name="topic" id="topic" class="custom-select">
+               {{#each topics}}
+               <option value="{{topic}}">{{topic}}</option>
+               {{/each}}
+            </select>
+         </div>
+
+          <div class="form-group mb-2">
+             <input 
+             type="text" name="label" id="label" 
+             class="form-control"
+             placeholder="type label..">
+          </div>
+
+          <div class="input-group mb-2">             
+             <textarea 
+              name="content" id="content" rows="5"
+             class="form-control"
+             placeholder="type body.."></textarea>
+             <div class="input-group-append">
+                <button type="submit" class="btn btn-success text-white font-weight-bolder p-3">Add</button>
+             </div>
+          </div>
+
+        </form>
+     </div>
+  
+    <!-- Display Jotes -->
+    {{#each jotes}}
+    <div class="card shadow-sm bg-white mb-2 border-0">
+      
+      <div class="card-body p-2 border-0">
+         <div class="card-title">{{topic}}</div>
+         <div class="card-text">{{content}}</div>
+      </div>
+      <div class="card-footer p-1 border-0">{{label}}</div>
+    </div>
+    {{/each}}
+
+  </div>
+ </div>
+
+ <!-- Topic label filters -->
+  <div class="labels">
+     <div class="p-2">
+        <form action="topics/new" method="POST" class="mb-3">
+    <div class="input-group">       
+       <input type="text" name="topic" id="topic" class="form-control" placeholder="type topic...">
+       <div class="input-group-append">
+                <button type="submit" class="btn btn-success text-white font-weight-bolder">Add Topic </button>
+       </div>
+    </div>
+    </form>
+     </div>
+
+    <div class="vr-round bg-dark text-white font-weight-bolder p-2 mb-1 sticky-top">
+       {{filtered_topic}} Options</div>
+
+     <div class="px-2">
+        <ul>
+       {{#each labels}}
+       <li class="p-1 mb-1"> <a href="topics/{{filtered_topic}}/labels/{{label}}" 
+       class="text-dark font-weight-bolder">{{label}}</a> </li>
+       {{/each}}
+    </ul>
+     </div>
+   </div>
+
+</body>
+</html>

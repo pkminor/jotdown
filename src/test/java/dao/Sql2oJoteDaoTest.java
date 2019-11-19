@@ -45,6 +45,20 @@ public class Sql2oJoteDaoTest {
     }
 
     @Test
+    public void getTopics() {
+        Jote jote = new Jote(1,"Angular","cli","ng create");
+        Jote jote2 = new Jote(1,"Node","cli","ng create");
+        Jote jote3 = new Jote(1,"Node","cli","ng create");
+        Jote jote4 = new Jote(1,"git","cli","ng create");
+
+        joteDao.add(jote);
+        joteDao.add(jote2);
+        joteDao.add(jote3);
+        joteDao.add(jote4);
+        assertEquals(3,joteDao.getTopics().size());
+    }
+
+    @Test
     public void add() {
         Jote jote = new Jote(1,"Angular","cli","ng create");
         Jote jote2 = new Jote(1,"Angular","cli","ng create");
