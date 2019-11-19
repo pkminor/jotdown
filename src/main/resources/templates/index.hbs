@@ -56,7 +56,13 @@
              </div>
             <select name="topic" id="topic" class="custom-select">
                {{#each topics}}
-               <option value="{{topic}}">{{topic}}</option>
+
+                  {{#if active}}
+                  <option value="{{topic}}"  selected>{{topic}}</option>
+                  {{else}}
+                   <option value="{{topic}}">{{topic}}</option>
+                  {{/if}}
+
                {{/each}}
             </select>
          </div>
