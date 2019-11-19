@@ -1,7 +1,11 @@
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.js.HandlebarsJs;
+import com.google.gson.Gson;
 import dao.Sql2oJoteDao;
 import models.Jote;
 import models.Label;
 import models.Topic;
+import models.TopicStatus;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
@@ -13,10 +17,14 @@ import static spark.Spark.*;
 public class App {
     public static void main(String[] args) {
 
+        port(1423);
+
         String connectionStr="jdbc:postgresql://localhost:5432/jotdown";
         Sql2o sql2o = new Sql2o(connectionStr,"pkminor","password");
 
         Sql2oJoteDao joteDao = new Sql2oJoteDao(sql2o);
+
+        get("/all",(req,res)-> new Gson().toJson(joteDao.getAll()));
 
         get("/", (req,res)->{
 
@@ -31,10 +39,14 @@ public class App {
                     label.length()==0? joteDao.findByTopic(topic) : joteDao.findByTopicLabel(topic,label);
 
             List<Topic> topics =  joteDao.getTopics();
+            List<TopicStatus> topic_status = new ArrayList<>();
+
+            topics.forEach(t-> topic_status.add(new TopicStatus(t.getTopic(), (t.getTopic().equals(topic))?true:false)));
+
             List<Label> labels = topic.length() ==0 ? new ArrayList<Label>() : joteDao.getTopicLabels(topic);
 
             model.put("jotes",jotes);
-            model.put("topics",topics);
+            model.put("topics",topic_status);
             model.put("filtered_topic",topic);
             model.put("labels",labels);
             return new ModelAndView(model,"index.hbs");
@@ -44,6 +56,7 @@ public class App {
 
             String topic =  req.params("topic");
             req.session().attribute("topic",topic);
+            req.session().attribute("label",null);
 
             res.redirect("/");
             return null;
@@ -97,6 +110,8 @@ public class App {
 
             return null;
         });
+
+
 
 
     }
