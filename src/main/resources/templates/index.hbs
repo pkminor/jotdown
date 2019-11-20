@@ -3,12 +3,20 @@
 <head>
    <title>{{#block "title"}}Jot Down{{/block}}</title>
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <style>
    .topics {width:20%;position:fixed;top:0;left:0;height:100%;overflow:auto;background-color: aliceblue;}
    .labels {width:20%;position:fixed;top:0;right:0;height:100%;overflow:auto;background-color: antiquewhite;}
    .content {width:60%;margin:auto;}
    body { background-color: #EBEFF2; user-select:none;font-family: "Trebuchet MS", Helvetica, sans-serif;}
-   textarea {resize:none; height: auto !important;}
+   textarea {height: auto !important; resize: none;
+ 
+    border: 0 none white;    
+    padding: 0;
+    outline: none;
+    background-color: #D0D0D0;
+
+   }
    li {list-style-type: none;}
    .vr-round {font-family: 'Varela Round', sans-serif;}
    /* width */
@@ -27,6 +35,8 @@
 
    /* Handle on hover */
    ::-webkit-scrollbar-thumb:hover {   background: #5cb85c; }
+   
+ 
    </style>
 </head>
 <body>
@@ -75,8 +85,8 @@
           </div>
 
           <div class="input-group mb-2">             
-             <textarea 
-              name="content" id="content" rows="5"
+             <textarea rows="5"
+              name="content" id="content" 
              class="form-control"
              placeholder="type body.."></textarea>
              <div class="input-group-append">
@@ -129,4 +139,21 @@
    </div>
 
 </body>
+<script>
+   $(function(){
+      var txt = document.getElementById("content");
+      txt.addEventListener("input", function(e){
+         //input captured even copy pasting. mot keypress or change!!!!!
+         
+
+         //var code = (e.keyCode ? e.keyCode : e.which);
+         //if(code==13){
+                     
+             txt.style.height = 'auto';          
+             txt.rows = txt.scrollHeight ==132 ? 5: 5 + (txt.scrollHeight-132)/24;
+         //}
+      
+       });      
+   });
+</script>
 </html>
