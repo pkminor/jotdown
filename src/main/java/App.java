@@ -49,6 +49,7 @@ public class App {
             model.put("topics",topic_status);
             model.put("filtered_topic",topic);
             model.put("labels",labels);
+            model.put("label",label);
             return new ModelAndView(model,"index.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -98,6 +99,10 @@ public class App {
             String topic = req.queryParams("topic");
             String label = req.queryParams("label");
             String content = req.queryParams("content");
+
+           //after adding a jote, the topics option should be as was added and the labels filtered to added label
+            req.session().attribute("topic",topic);
+            req.session().attribute("label",label);
 
             if(!joteDao.getTopics().contains(topic)){
                 joteDao.addTopic(new Topic(topic));
