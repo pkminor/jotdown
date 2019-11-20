@@ -80,7 +80,7 @@ public class App {
             String topic = req.queryParams("topic");
             //Map<String,Object> model = new HashMap<>();
 
-            if(!joteDao.getTopics().contains(topic)){
+            if(topic.length()>0 && !joteDao.getTopics().contains(topic)){
                 joteDao.addTopic(new Topic(topic));
             }
 
@@ -104,12 +104,18 @@ public class App {
             req.session().attribute("topic",topic);
             req.session().attribute("label",label);
 
-            if(!joteDao.getTopics().contains(topic)){
+
+
+            if(topic.length()>0 && !joteDao.getTopics().contains(topic)){
                 joteDao.addTopic(new Topic(topic));
             }
 
-            Jote jote =  new Jote(1,topic,label,content);
-            joteDao.add(jote);
+            //avoid empty entries...
+            boolean data_provided = topic.length()>0 && label.length()>0 && content.length()>0;
+            if(data_provided) {
+                Jote jote = new Jote(1, topic, label, content);
+                joteDao.add(jote);
+            }
 
             res.redirect("/");
 
