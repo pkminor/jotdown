@@ -12,7 +12,8 @@ import java.util.PrimitiveIterator;
 import static org.junit.Assert.*;
 
 public class Sql2oJoteDaoTest {
-/*
+
+    /*
     private  static Sql2oJoteDao joteDao;
     private static Connection con;
     @BeforeClass
@@ -106,5 +107,5 @@ public class Sql2oJoteDaoTest {
         //but you can implement this in the logic just like id was changed to match db value.
     }
 
- */
+*/
 }

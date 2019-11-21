@@ -23,22 +23,32 @@ public class App {
         // This tells our app that if Heroku sets a port for us, we need to use that port.
         // Otherwise, if they do not, continue using port 4567.
 
+        String host="ec2-107-22-253-158.compute-1.amazonaws.com";
+        String DBPORT="5432";
+        String DBURI="dehnj8vomqipr4";
+        String user="tjooxldvntsnoq";
+        String pwd="308e09b0d572b70fea5ccb8257c3e7a864586dd15628ca6e5e73d3b383be1c52";
+
         if (process.environment().get("PORT") != null) {
             port = Integer.parseInt(process.environment().get("PORT"));
         } else {
             port = 4567;
+            host="localhost";
+            DBPORT="5432";
+            DBURI="jotdown";
+            user="pkminor";
+            pwd="password";
         }
 
         port(port);
 
         //port(1423);
 
-        String host="ec2-107-22-253-158.compute-1.amazonaws.com";
-        String DBURI="dehnj8vomqipr4";
-        String user="tjooxldvntsnoq";
-        String pwd="308e09b0d572b70fea5ccb8257c3e7a864586dd15628ca6e5e73d3b383be1c52";
+        String connectionStr="jdbc:postgresql://"+host+":"+DBPORT+"/"+DBURI;
+        //String connectionStr="jdbc:postgresql://localhost:5432/jotdown_test";
+        //Sql2o sql2o = new Sql2o(connectionStr,"pkminor","password");
+        System.out.println(connectionStr);
 
-        String connectionStr="jdbc:postgresql://"+host+":5432/"+DBURI;
         Sql2o sql2o = new Sql2o(connectionStr,user,pwd);
 
         Sql2oJoteDao joteDao = new Sql2oJoteDao(sql2o);
@@ -140,9 +150,6 @@ public class App {
 
             return null;
         });
-
-
-
 
     }
 }
