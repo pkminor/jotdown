@@ -33,8 +33,13 @@ public class App {
 
         //port(1423);
 
-        String connectionStr="jdbc:postgresql://localhost:5432/jotdown";
-        Sql2o sql2o = new Sql2o(connectionStr,"pkminor","password");
+        String host="ec2-107-22-253-158.compute-1.amazonaws.com";
+        String DB="dehnj8vomqipr4";
+        String user="tjooxldvntsnoq";
+        String pwd="308e09b0d572b70fea5ccb8257c3e7a864586dd15628ca6e5e73d3b383be1c52";
+
+        String connectionStr="jdbc:postgresql://"+host+"/"+DB;
+        Sql2o sql2o = new Sql2o(connectionStr,user,pwd);
 
         Sql2oJoteDao joteDao = new Sql2oJoteDao(sql2o);
 
