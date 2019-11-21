@@ -12,7 +12,7 @@ import java.util.PrimitiveIterator;
 import static org.junit.Assert.*;
 
 public class Sql2oJoteDaoTest {
-
+/*
     private  static Sql2oJoteDao joteDao;
     private static Connection con;
     @BeforeClass
@@ -105,4 +105,6 @@ public class Sql2oJoteDaoTest {
         //noted that updated don't change the object, you have to fetch from the db.
         //but you can implement this in the logic just like id was changed to match db value.
     }
+
+ */
 }
