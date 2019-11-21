@@ -17,7 +17,21 @@ import static spark.Spark.*;
 public class App {
     public static void main(String[] args) {
 
-        port(1423);
+        ProcessBuilder process = new ProcessBuilder();
+        Integer port;
+
+        // This tells our app that if Heroku sets a port for us, we need to use that port.
+        // Otherwise, if they do not, continue using port 4567.
+
+        if (process.environment().get("PORT") != null) {
+            port = Integer.parseInt(process.environment().get("PORT"));
+        } else {
+            port = 4567;
+        }
+
+        port(port);
+
+        //port(1423);
 
         String connectionStr="jdbc:postgresql://localhost:5432/jotdown";
         Sql2o sql2o = new Sql2o(connectionStr,"pkminor","password");

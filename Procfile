@@ -1,0 +1,1 @@
+web: ./build/install/jotdown/bin/jotdown
